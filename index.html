@@ -449,10 +449,15 @@
         }
         
         .progress-container {
+            position: sticky;
+            bottom: 0;
             margin-top: 30px;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.95);
             border: 1px solid var(--ecam-border);
+            border-top: 2px solid var(--ecam-cyan);
+            z-index: 100;
+            backdrop-filter: blur(10px);
         }
         
         .progress-header {
