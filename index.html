@@ -141,6 +141,183 @@
             font-weight: 700;
         }
         
+        .ecam-countdown {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--ecam-cyan);
+            font-size: 12px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .ecam-countdown:hover {
+            color: var(--ecam-amber);
+            text-shadow: 0 0 10px rgba(255, 179, 71, 0.6);
+        }
+        
+        .ecam-countdown.negative {
+            color: var(--ecam-green);
+        }
+        
+        .ecam-countdown.positive {
+            color: var(--ecam-red);
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: var(--ecam-panel);
+            margin: 10% auto;
+            padding: 30px;
+            border: 3px solid var(--ecam-cyan);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 2px;
+            box-shadow: 0 0 40px rgba(34, 211, 238, 0.4);
+        }
+        
+        .modal-header {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--ecam-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .time-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .time-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--ecam-border);
+            color: var(--ecam-white);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 24px;
+            font-weight: 700;
+            width: 70px;
+            padding: 10px;
+            text-align: center;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .time-input:focus {
+            outline: none;
+            border-color: var(--ecam-cyan);
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+        }
+        
+        .time-separator {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            color: var(--ecam-amber);
+            font-weight: 700;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .modal-btn {
+            background: transparent;
+            border: 2px solid var(--ecam-cyan);
+            color: var(--ecam-cyan);
+            padding: 10px 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 100px;
+        }
+        
+        .modal-btn:hover {
+            background: var(--ecam-cyan);
+            color: var(--ecam-bg);
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+        }
+        
+        .modal-btn.cancel {
+            border-color: var(--ecam-gray);
+            color: var(--ecam-gray);
+        }
+        
+        .modal-btn.cancel:hover {
+            background: var(--ecam-gray);
+            color: var(--ecam-bg);
+        }
+        
+        .modal-btn.reset {
+            border-color: var(--ecam-amber);
+            color: var(--ecam-amber);
+        }
+        
+        .modal-btn.reset:hover {
+            background: var(--ecam-amber);
+            color: var(--ecam-bg);
+        }
+        
+        .quick-set {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--ecam-border);
+        }
+        
+        .quick-set-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--ecam-gray);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .quick-set-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .quick-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--ecam-border);
+            color: var(--ecam-white);
+            padding: 5px 10px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-btn:hover {
+            border-color: var(--ecam-cyan);
+            background: rgba(34, 211, 238, 0.1);
+        }
+        
         .ecam-body {
             padding: 30px;
         }
@@ -407,7 +584,10 @@
                     <div class="status-light active"></div>
                     <span>System Normal</span>
                 </div>
-                <div class="ecam-time" id="currentTime">00:00:00</div>
+                <div style="display: flex; flex-direction: column; gap: 5px; align-items: flex-end;">
+                    <div class="ecam-time" id="zuluTime">00:00:00Z</div>
+                    <div class="ecam-countdown" id="countdown" style="cursor: pointer;" onclick="openTimerModal()">T+ 00:00:00</div>
+                </div>
             </div>
         </div>
         
@@ -585,18 +765,156 @@
         </div>
     </div>
     
+    <!-- Timer Setup Modal -->
+    <div id="timerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Set Reference Time</div>
+            <div class="time-input-group">
+                <input type="number" id="hourInput" class="time-input" min="0" max="23" value="00" placeholder="HH">
+                <span class="time-separator">:</span>
+                <input type="number" id="minuteInput" class="time-input" min="0" max="59" value="00" placeholder="MM">
+                <span class="time-separator">:</span>
+                <input type="number" id="secondInput" class="time-input" min="0" max="59" value="00" placeholder="SS">
+            </div>
+            <div class="quick-set">
+                <div class="quick-set-label">Quick Set</div>
+                <div class="quick-set-buttons">
+                    <button class="quick-btn" onclick="setQuickTime(0)">Now</button>
+                    <button class="quick-btn" onclick="setQuickTime(5)">+5 min</button>
+                    <button class="quick-btn" onclick="setQuickTime(10)">+10 min</button>
+                    <button class="quick-btn" onclick="setQuickTime(15)">+15 min</button>
+                    <button class="quick-btn" onclick="setQuickTime(30)">+30 min</button>
+                    <button class="quick-btn" onclick="setQuickTime(60)">+1 hr</button>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="closeTimerModal()">Cancel</button>
+                <button class="modal-btn reset" onclick="resetTimer()">Reset</button>
+                <button class="modal-btn" onclick="setTimer()">Set Timer</button>
+            </div>
+        </div>
+    </div>
+    
     <script>
-        // Update time
-        function updateTime() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('currentTime').textContent = `${hours}:${minutes}:${seconds}`;
-        }
-        setInterval(updateTime, 1000);
-        updateTime();
+        // Timer variables
+        let referenceTime = null;
+        let timerInterval = null;
         
+        // Update Zulu time
+        function updateZuluTime() {
+            const now = new Date();
+            const hours = String(now.getUTCHours()).padStart(2, '0');
+            const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+            const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+            document.getElementById('zuluTime').textContent = `${hours}:${minutes}:${seconds}Z`;
+        }
+        
+        // Update countdown timer
+        function updateCountdown() {
+            if (!referenceTime) {
+                document.getElementById('countdown').textContent = 'T+ 00:00:00';
+                document.getElementById('countdown').className = 'ecam-countdown';
+                return;
+            }
+            
+            const now = new Date();
+            const diff = Math.floor((now - referenceTime) / 1000); // difference in seconds
+            const absDiff = Math.abs(diff);
+            
+            const hours = Math.floor(absDiff / 3600);
+            const minutes = Math.floor((absDiff % 3600) / 60);
+            const seconds = absDiff % 60;
+            
+            const timeStr = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            const prefix = diff < 0 ? 'T- ' : 'T+ ';
+            
+            const countdownEl = document.getElementById('countdown');
+            countdownEl.textContent = prefix + timeStr;
+            
+            // Update color based on T- or T+
+            if (diff < 0) {
+                countdownEl.className = 'ecam-countdown negative';
+            } else {
+                countdownEl.className = 'ecam-countdown positive';
+            }
+        }
+        
+        // Start timers
+        setInterval(updateZuluTime, 1000);
+        setInterval(updateCountdown, 1000);
+        updateZuluTime();
+        updateCountdown();
+        
+        // Modal functions
+        function openTimerModal() {
+            document.getElementById('timerModal').style.display = 'block';
+            
+            // Pre-fill with current reference time if set
+            if (referenceTime) {
+                const hours = referenceTime.getUTCHours();
+                const minutes = referenceTime.getUTCMinutes();
+                const seconds = referenceTime.getUTCSeconds();
+                document.getElementById('hourInput').value = String(hours).padStart(2, '0');
+                document.getElementById('minuteInput').value = String(minutes).padStart(2, '0');
+                document.getElementById('secondInput').value = String(seconds).padStart(2, '0');
+            } else {
+                // Default to current time
+                const now = new Date();
+                document.getElementById('hourInput').value = String(now.getUTCHours()).padStart(2, '0');
+                document.getElementById('minuteInput').value = String(now.getUTCMinutes()).padStart(2, '0');
+                document.getElementById('secondInput').value = String(now.getUTCSeconds()).padStart(2, '0');
+            }
+        }
+        
+        function closeTimerModal() {
+            document.getElementById('timerModal').style.display = 'none';
+        }
+        
+        function setTimer() {
+            const hours = parseInt(document.getElementById('hourInput').value) || 0;
+            const minutes = parseInt(document.getElementById('minuteInput').value) || 0;
+            const seconds = parseInt(document.getElementById('secondInput').value) || 0;
+            
+            // Create reference time in UTC
+            const now = new Date();
+            referenceTime = new Date(Date.UTC(
+                now.getUTCFullYear(),
+                now.getUTCMonth(),
+                now.getUTCDate(),
+                hours,
+                minutes,
+                seconds
+            ));
+            
+            updateCountdown();
+            closeTimerModal();
+        }
+        
+        function resetTimer() {
+            referenceTime = null;
+            updateCountdown();
+            closeTimerModal();
+        }
+        
+        function setQuickTime(minutesFromNow) {
+            const now = new Date();
+            const targetTime = new Date(now.getTime() + minutesFromNow * 60000);
+            
+            document.getElementById('hourInput').value = String(targetTime.getUTCHours()).padStart(2, '0');
+            document.getElementById('minuteInput').value = String(targetTime.getUTCMinutes()).padStart(2, '0');
+            document.getElementById('secondInput').value = String(targetTime.getUTCSeconds()).padStart(2, '0');
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('timerModal');
+            if (event.target == modal) {
+                closeTimerModal();
+            }
+        }
+    </script>
+    
+    <script>
         // Checklist functionality
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         const totalItems = checkboxes.length;
