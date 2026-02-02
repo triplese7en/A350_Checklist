@@ -90,6 +90,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .ecam-title {
@@ -316,6 +318,237 @@
         .quick-btn:hover {
             border-color: var(--ecam-cyan);
             background: rgba(34, 211, 238, 0.1);
+        }
+        
+        /* Scratchpad styles */
+        .scratchpad-btn {
+            background: transparent;
+            border: 2px solid var(--ecam-cyan);
+            color: var(--ecam-cyan);
+            padding: 8px 16px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .scratchpad-btn:hover {
+            background: var(--ecam-cyan);
+            color: var(--ecam-bg);
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
+        }
+        
+        .scratchpad-panel {
+            position: fixed;
+            right: -450px;
+            top: 0;
+            width: 450px;
+            height: 100vh;
+            background: var(--ecam-panel);
+            border-left: 3px solid var(--ecam-cyan);
+            box-shadow: -5px 0 40px rgba(0, 0, 0, 0.8);
+            z-index: 1500;
+            transition: right 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .scratchpad-panel.open {
+            right: 0;
+        }
+        
+        .scratchpad-header {
+            background: linear-gradient(180deg, #1a1f2e 0%, #0f1419 100%);
+            padding: 20px;
+            border-bottom: 2px solid var(--ecam-cyan);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .scratchpad-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--ecam-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .close-scratchpad {
+            background: transparent;
+            border: 2px solid var(--ecam-amber);
+            color: var(--ecam-amber);
+            width: 35px;
+            height: 35px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .close-scratchpad:hover {
+            background: var(--ecam-amber);
+            color: var(--ecam-bg);
+            box-shadow: 0 0 15px rgba(255, 179, 71, 0.5);
+        }
+        
+        .scratchpad-tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--ecam-border);
+        }
+        
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--ecam-gray);
+            padding: 15px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--ecam-white);
+        }
+        
+        .tab-btn.active {
+            color: var(--ecam-cyan);
+            border-bottom-color: var(--ecam-cyan);
+            background: rgba(34, 211, 238, 0.1);
+        }
+        
+        .scratchpad-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .tab-pane {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+            padding: 20px;
+            overflow: auto;
+        }
+        
+        .tab-pane.active {
+            display: flex;
+        }
+        
+        .scratchpad-textarea {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--ecam-border);
+            color: var(--ecam-white);
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+            padding: 15px;
+            resize: none;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .scratchpad-textarea:focus {
+            border-color: var(--ecam-cyan);
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+        }
+        
+        .canvas-container {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--ecam-border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #drawingCanvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            touch-action: none;
+        }
+        
+        .canvas-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .canvas-btn {
+            background: transparent;
+            border: 2px solid var(--ecam-border);
+            color: var(--ecam-white);
+            padding: 8px 15px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 80px;
+        }
+        
+        .canvas-btn:hover {
+            border-color: var(--ecam-cyan);
+            background: rgba(34, 211, 238, 0.1);
+        }
+        
+        .canvas-btn.clear {
+            border-color: var(--ecam-red);
+            color: var(--ecam-red);
+        }
+        
+        .canvas-btn.clear:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        .color-picker {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .color-btn {
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--ecam-border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .color-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        .color-btn.active {
+            border-color: var(--ecam-cyan);
+            box-shadow: 0 0 10px var(--ecam-cyan);
+        }
+        
+        @media (max-width: 768px) {
+            .scratchpad-panel {
+                width: 100%;
+                right: -100%;
+            }
         }
         
         .ecam-body {
@@ -584,6 +817,7 @@
     <div class="ecam-container">
         <div class="ecam-header">
             <div class="ecam-title">A350 AIDE MEMOIRE</div>
+            <button class="scratchpad-btn" onclick="toggleScratchpad()">Scratchpad</button>
             <div class="ecam-status">
                 <div class="status-indicator">
                     <div class="status-light active"></div>
@@ -800,7 +1034,201 @@
         </div>
     </div>
     
+    <!-- Scratchpad Panel -->
+    <div id="scratchpadPanel" class="scratchpad-panel">
+        <div class="scratchpad-header">
+            <div class="scratchpad-title">Scratchpad</div>
+            <button class="close-scratchpad" onclick="toggleScratchpad()">×</button>
+        </div>
+        
+        <div class="scratchpad-tabs">
+            <button class="tab-btn active" onclick="switchTab('notes')">Notes</button>
+            <button class="tab-btn" onclick="switchTab('draw')">Draw</button>
+        </div>
+        
+        <div class="scratchpad-content">
+            <div id="notesTab" class="tab-pane active">
+                <textarea id="scratchpadNotes" class="scratchpad-textarea" placeholder="Enter notes, clearances, frequencies..."></textarea>
+            </div>
+            
+            <div id="drawTab" class="tab-pane">
+                <div class="canvas-container">
+                    <canvas id="drawingCanvas"></canvas>
+                </div>
+                <div class="color-picker">
+                    <div class="color-btn active" style="background: #e5e7eb;" onclick="setDrawColor('#e5e7eb', this)"></div>
+                    <div class="color-btn" style="background: #22d3ee;" onclick="setDrawColor('#22d3ee', this)"></div>
+                    <div class="color-btn" style="background: #ffb347;" onclick="setDrawColor('#ffb347', this)"></div>
+                    <div class="color-btn" style="background: #4ade80;" onclick="setDrawColor('#4ade80', this)"></div>
+                    <div class="color-btn" style="background: #ef4444;" onclick="setDrawColor('#ef4444', this)"></div>
+                </div>
+                <div class="canvas-controls">
+                    <button class="canvas-btn" onclick="saveDrawing()">Save</button>
+                    <button class="canvas-btn clear" onclick="clearCanvas()">Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script>
+        // Scratchpad functionality
+        let canvas, ctx, isDrawing = false;
+        let currentColor = '#e5e7eb';
+        let lastX = 0, lastY = 0;
+        
+        // Initialize scratchpad
+        function initScratchpad() {
+            canvas = document.getElementById('drawingCanvas');
+            ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            function resizeCanvas() {
+                const container = canvas.parentElement;
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+                loadDrawing(); // Reload drawing after resize
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Drawing event listeners
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            
+            // Touch support for iPad/Apple Pencil
+            canvas.addEventListener('touchstart', handleTouch);
+            canvas.addEventListener('touchmove', handleTouch);
+            canvas.addEventListener('touchend', stopDrawing);
+            
+            // Load saved data
+            loadNotes();
+            loadDrawing();
+        }
+        
+        function toggleScratchpad() {
+            const panel = document.getElementById('scratchpadPanel');
+            panel.classList.toggle('open');
+        }
+        
+        function switchTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update tab panes
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+            if (tab === 'notes') {
+                document.getElementById('notesTab').classList.add('active');
+            } else {
+                document.getElementById('drawTab').classList.add('active');
+            }
+        }
+        
+        // Notes functionality
+        function loadNotes() {
+            const notes = localStorage.getItem('scratchpadNotes');
+            if (notes) {
+                document.getElementById('scratchpadNotes').value = notes;
+            }
+        }
+        
+        function saveNotes() {
+            const notes = document.getElementById('scratchpadNotes').value;
+            localStorage.setItem('scratchpadNotes', notes);
+        }
+        
+        // Auto-save notes on input
+        document.addEventListener('DOMContentLoaded', function() {
+            initScratchpad();
+            const textarea = document.getElementById('scratchpadNotes');
+            if (textarea) {
+                textarea.addEventListener('input', saveNotes);
+            }
+        });
+        
+        // Drawing functionality
+        function startDrawing(e) {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            lastX = e.clientX - rect.left;
+            lastY = e.clientY - rect.top;
+        }
+        
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            
+            lastX = x;
+            lastY = y;
+        }
+        
+        function stopDrawing() {
+            if (isDrawing) {
+                isDrawing = false;
+                saveDrawingToStorage();
+            }
+        }
+        
+        function handleTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }
+        
+        function setDrawColor(color, element) {
+            currentColor = color;
+            document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+        }
+        
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            localStorage.removeItem('scratchpadDrawing');
+        }
+        
+        function saveDrawingToStorage() {
+            const dataURL = canvas.toDataURL();
+            localStorage.setItem('scratchpadDrawing', dataURL);
+        }
+        
+        function loadDrawing() {
+            const dataURL = localStorage.getItem('scratchpadDrawing');
+            if (dataURL) {
+                const img = new Image();
+                img.onload = function() {
+                    ctx.drawImage(img, 0, 0);
+                };
+                img.src = dataURL;
+            }
+        }
+        
+        function saveDrawing() {
+            const dataURL = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = 'scratchpad-' + new Date().toISOString().slice(0,10) + '.png';
+            link.href = dataURL;
+            link.click();
+        }
+        
         // Timer variables
         let referenceTime = null;
         let timerInterval = null;
