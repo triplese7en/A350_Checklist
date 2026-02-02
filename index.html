@@ -33,9 +33,10 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             padding: 20px;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
         
         /* Scanline effect */
@@ -79,6 +80,7 @@
                 0 0 40px rgba(34, 211, 238, 0.2),
                 inset 0 0 60px rgba(0, 0, 0, 0.5);
             animation: flicker 3s ease-in-out infinite;
+            margin: 20px auto;
         }
         
         .ecam-header {
@@ -334,18 +336,63 @@
         }
         
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .ecam-container {
+                margin: 10px auto;
+            }
+            
             .ecam-header {
                 flex-direction: column;
                 gap: 15px;
+                padding: 15px 20px;
             }
             
             .ecam-title {
                 font-size: 20px;
             }
             
+            .ecam-body {
+                padding: 20px 15px;
+            }
+            
+            .phase-header {
+                font-size: 14px;
+                padding: 12px 15px;
+            }
+            
+            .checklist-item {
+                padding: 12px 15px;
+                flex-wrap: wrap;
+            }
+            
+            .item-text {
+                font-size: 13px;
+                word-break: break-word;
+            }
+            
             .ecam-footer {
                 flex-direction: column;
                 gap: 15px;
+                padding: 15px 20px;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .ecam-container {
+                max-width: 800px;
+            }
+            
+            .ecam-title {
+                font-size: 24px;
+            }
+        }
+        
+        @media (min-width: 1025px) {
+            body {
+                align-items: center;
             }
         }
     </style>
@@ -407,9 +454,8 @@
                     <label for="check5" class="item-text">TECH LOG/MEL</label>
                     <span class="item-status status-pending">PEND</span>
                 </div>
-            </div>
-            
-            <<div class="checklist-item">
+                
+                <div class="checklist-item">
                     <div class="checkbox-container">
                         <input type="checkbox" id="check6">
                     </div>
@@ -440,9 +486,8 @@
                     <label for="check9" class="item-text">SECURITY CHECK FORM</label>
                     <span class="item-status status-pending">PEND</span>
                 </div>
-            </div>
-            
-            <div class="checklist-item">
+                
+                <div class="checklist-item">
                     <div class="checkbox-container">
                         <input type="checkbox" id="check10">
                     </div>
@@ -465,67 +510,60 @@
                     <label for="check12" class="item-text">BRIEFING</label>
                     <span class="item-status status-pending">PEND</span>
                 </div>
-            </div>
-
-    <div class="checklist-item">
+                
+                <div class="checklist-item">
                     <div class="checkbox-container">
-                        <input type="checkbox" id="check12">
+                        <input type="checkbox" id="check13">
                     </div>
-                    <label for="check12" class="item-text">NOTOC</label>
+                    <label for="check13" class="item-text">NOTOC</label>
                     <span class="item-status status-pending">PEND</span>
                 </div>
-            </div>
-
-    <div class="checklist-item">
+                
+                <div class="checklist-item">
                     <div class="checkbox-container">
-                        <input type="checkbox" id="check12">
+                        <input type="checkbox" id="check14">
                     </div>
-                    <label for="check12" class="item-text">COCKPIT PREP CHECKLIST</label>
+                    <label for="check14" class="item-text">COCKPIT PREP CHECKLIST</label>
                     <span class="item-status status-pending">PEND</span>
                 </div>
-            </div>
-
-    <div class="checklist-item">
+                
+                <div class="checklist-item">
                     <div class="checkbox-container">
-                        <input type="checkbox" id="check12">
+                        <input type="checkbox" id="check15">
                     </div>
-                    <label for="check12" class="item-text">LOADSHEET + LOADSHEET ACCEPTANCE</label>
+                    <label for="check15" class="item-text">LOADSHEET + LOADSHEET ACCEPTANCE</label>
                     <span class="item-status status-pending">PEND</span>
                 </div>
-            </div>
-
-    <div class="checklist-item">
+                
+                <div class="checklist-item">
                     <div class="checkbox-container">
-                        <input type="checkbox" id="check12">
+                        <input type="checkbox" id="check16">
                     </div>
-                    <label for="check12" class="item-text">X-CHECK WITH AVIONICS</label>
+                    <label for="check16" class="item-text">X-CHECK WITH AVIONICS</label>
                     <span class="item-status status-pending">PEND</span>
                 </div>
-            </div>
-
-    <div class="checklist-item">
+                
+                <div class="checklist-item">
                     <div class="checkbox-container">
-                        <input type="checkbox" id="check12">
+                        <input type="checkbox" id="check17">
                     </div>
-                    <label for="check12" class="item-text">TECH + CABIN LOG SIGN</label>
+                    <label for="check17" class="item-text">TECH + CABIN LOG SIGN</label>
                     <span class="item-status status-pending">PEND</span>
                 </div>
-            </div>
-
-<div class="checklist-item">
+                
+                <div class="checklist-item">
                     <div class="checkbox-container">
-                        <input type="checkbox" id="check12">
+                        <input type="checkbox" id="check18">
                     </div>
-                    <label for="check12" class="item-text">PA</label>
+                    <label for="check18" class="item-text">PA</label>
                     <span class="item-status status-pending">PEND</span>
                 </div>
-            </div>
-
-    <div class="checklist-item">
+                
+                <div class="checklist-item">
                     <div class="checkbox-container">
-                        <input type="checkbox" id="check12">
+                        <input type="checkbox" id="check19">
                     </div>
-                    <label for="check12" class="item-text">BEFORE START CHECKLIST</label>
+                    <label for="check19" class="item-text">BEFORE START CHECKLIST</label>
                     <span class="item-status status-pending">PEND</span>
                 </div>
             </div>
@@ -533,7 +571,7 @@
             <div class="progress-container">
                 <div class="progress-header">
                     <span>Checklist Progress</span>
-                    <span id="progressText">0/12 Complete</span>
+                    <span id="progressText">0/19 Complete</span>
                 </div>
                 <div class="progress-bar-container">
                     <div class="progress-bar" id="progressBar" style="width: 0%"></div>
@@ -619,7 +657,7 @@
                     .catch(error => {
                         console.log('Service Worker registration failed:', error);
                     });
-            });
+                });
         }
     </script>
 </body>
