@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0e14">
+    <title>ECAM Checklist System</title>
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ecam-bg: #0a0e14;
+            --ecam-panel: #0f1419;
+            --ecam-amber: #ffb347;
+            --ecam-green: #4ade80;
+            --ecam-cyan: #22d3ee;
+            --ecam-white: #e5e7eb;
+            --ecam-gray: #6b7280;
+            --ecam-red: #ef4444;
+            --ecam-border: #1f2937;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background: var(--ecam-bg);
+            color: var(--ecam-white);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+        
+        /* Scanline effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanline 8s linear infinite;
+        }
+        
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+        
+        /* Screen flicker */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.98; }
+        }
+        
+        .ecam-container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--ecam-panel);
+            border: 3px solid var(--ecam-border);
+            border-radius: 2px;
+            box-shadow: 
+                0 0 40px rgba(34, 211, 238, 0.2),
+                inset 0 0 60px rgba(0, 0, 0, 0.5);
+            animation: flicker 3s ease-in-out infinite;
+        }
+        
+        .ecam-header {
+            background: linear-gradient(180deg, #1a1f2e 0%, #0f1419 100%);
+            border-bottom: 2px solid var(--ecam-cyan);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .ecam-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--ecam-cyan);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(34, 211, 238, 0.6);
+        }
+        
+        .ecam-status {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .status-light {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .status-light.active {
+            background: var(--ecam-green);
+            box-shadow: 0 0 10px var(--ecam-green);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .ecam-time {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--ecam-amber);
+            font-size: 14px;
+            font-weight: 700;
+        }
+        
+        .ecam-body {
+            padding: 30px;
+        }
+        
+        .phase-header {
+            background: rgba(34, 211, 238, 0.1);
+            border-left: 4px solid var(--ecam-cyan);
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--ecam-cyan);
+        }
+        
+        .checklist-group {
+            margin-bottom: 30px;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--ecam-border);
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .checklist-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: rgba(74, 222, 128, 0.1);
+            transition: width 0.4s ease;
+        }
+        
+        .checklist-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--ecam-cyan);
+        }
+        
+        .checklist-item.completed::before {
+            width: 100%;
+        }
+        
+        .checklist-item.completed {
+            background: rgba(74, 222, 128, 0.05);
+            border-color: var(--ecam-green);
+        }
+        
+        .checkbox-container {
+            position: relative;
+            margin-right: 20px;
+        }
+        
+        input[type="checkbox"] {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--ecam-amber);
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="checkbox"]:hover {
+            border-color: var(--ecam-cyan);
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+        }
+        
+        input[type="checkbox"]:checked {
+            background: var(--ecam-green);
+            border-color: var(--ecam-green);
+            box-shadow: 0 0 15px rgba(74, 222, 128, 0.5);
+        }
+        
+        input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--ecam-bg);
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .item-text {
+            flex: 1;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            color: var(--ecam-white);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .checklist-item.completed .item-text {
+            color: var(--ecam-green);
+        }
+        
+        .item-status {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 2px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .status-pending {
+            color: var(--ecam-amber);
+            border: 1px solid var(--ecam-amber);
+        }
+        
+        .status-complete {
+            color: var(--ecam-green);
+            border: 1px solid var(--ecam-green);
+        }
+        
+        .progress-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--ecam-border);
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .progress-bar-container {
+            height: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--ecam-border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--ecam-green) 0%, var(--ecam-cyan) 100%);
+            transition: width 0.5s ease;
+            box-shadow: 0 0 20px rgba(74, 222, 128, 0.6);
+        }
+        
+        .ecam-footer {
+            padding: 20px 30px;
+            border-top: 2px solid var(--ecam-border);
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--ecam-gray);
+        }
+        
+        .reset-btn {
+            background: transparent;
+            border: 2px solid var(--ecam-amber);
+            color: var(--ecam-amber);
+            padding: 10px 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .reset-btn:hover {
+            background: var(--ecam-amber);
+            color: var(--ecam-bg);
+            box-shadow: 0 0 20px rgba(255, 179, 71, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            .ecam-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .ecam-title {
+                font-size: 20px;
+            }
+            
+            .ecam-footer {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ecam-container">
+        <div class="ecam-header">
+            <div class="ecam-title">A350 AIDE MEMOIRE</div>
+            <div class="ecam-status">
+                <div class="status-indicator">
+                    <div class="status-light active"></div>
+                    <span>System Normal</span>
+                </div>
+                <div class="ecam-time" id="currentTime">00:00:00</div>
+            </div>
+        </div>
+        
+        <div class="ecam-body">
+            <div class="phase-header">PRELIM COCKPIT PREPARATION</div>
+            
+            <div class="checklist-group">
+                <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check1">
+                    </div>
+                    <label for="check1" class="item-text">BRAKES TEMP</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check2">
+                    </div>
+                    <label for="check2" class="item-text">BATT CHECK/ADIRS</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check3">
+                    </div>
+                    <label for="check3" class="item-text">POWER UP</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check4">
+                    </div>
+                    <label for="check4" class="item-text">OIS</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check5">
+                    </div>
+                    <label for="check5" class="item-text">TECH LOG/MEL</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+            </div>
+            
+            <<div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check6">
+                    </div>
+                    <label for="check6" class="item-text">MFF/OEB's</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check7">
+                    </div>
+                    <label for="check7" class="item-text">APU/ENG FIRE TEST</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check8">
+                    </div>
+                    <label for="check8" class="item-text">TOPA</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check9">
+                    </div>
+                    <label for="check9" class="item-text">SECURITY CHECK FORM</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+            </div>
+            
+            <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check10">
+                    </div>
+                    <label for="check10" class="item-text">FUEL FIGURES => ENGINEER + LOADCONTROL</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check11">
+                    </div>
+                    <label for="check11" class="item-text">ATC CLEARANCE</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check12">
+                    </div>
+                    <label for="check12" class="item-text">BRIEFING</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+            </div>
+
+    <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check12">
+                    </div>
+                    <label for="check12" class="item-text">NOTOC</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+            </div>
+
+    <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check12">
+                    </div>
+                    <label for="check12" class="item-text">COCKPIT PREP CHECKLIST</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+            </div>
+
+    <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check12">
+                    </div>
+                    <label for="check12" class="item-text">LOADSHEET + LOADSHEET ACCEPTANCE</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+            </div>
+
+    <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check12">
+                    </div>
+                    <label for="check12" class="item-text">X-CHECK WITH AVIONICS</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+            </div>
+
+    <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check12">
+                    </div>
+                    <label for="check12" class="item-text">TECH + CABIN LOG SIGN</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+            </div>
+
+<div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check12">
+                    </div>
+                    <label for="check12" class="item-text">PA</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+            </div>
+
+    <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="check12">
+                    </div>
+                    <label for="check12" class="item-text">BEFORE START CHECKLIST</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+            </div>
+    
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span>Checklist Progress</span>
+                    <span id="progressText">0/12 Complete</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="ecam-footer">
+            <span>A350-900 XWB | REV 2026.02</span>
+            <button class="reset-btn" onclick="resetChecklist()">Reset All</button>
+        </div>
+    </div>
+    
+    <script>
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('currentTime').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+        
+        // Checklist functionality
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const totalItems = checkboxes.length;
+        
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const item = this.closest('.checklist-item');
+                const status = item.querySelector('.item-status');
+                
+                if (this.checked) {
+                    item.classList.add('completed');
+                    status.textContent = 'DONE';
+                    status.classList.remove('status-pending');
+                    status.classList.add('status-complete');
+                } else {
+                    item.classList.remove('completed');
+                    status.textContent = 'PEND';
+                    status.classList.remove('status-complete');
+                    status.classList.add('status-pending');
+                }
+                
+                updateProgress();
+            });
+        });
+        
+        function updateProgress() {
+            const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            const percentage = (checkedCount / totalItems) * 100;
+            
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = `${checkedCount}/${totalItems} Complete`;
+        }
+        
+        function resetChecklist() {
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+                const item = checkbox.closest('.checklist-item');
+                const status = item.querySelector('.item-status');
+                
+                item.classList.remove('completed');
+                status.textContent = 'PEND';
+                status.classList.remove('status-complete');
+                status.classList.add('status-pending');
+            });
+            
+            updateProgress();
+        }
+    </script>
+    
+    <script>
+        // Register service worker for offline functionality
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered successfully:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
