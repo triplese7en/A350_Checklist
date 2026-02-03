@@ -730,11 +730,16 @@
         }
         
         .progress-container {
+            position: sticky;
+            bottom: 0;
             margin-top: 20px;
             padding: 15px;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(10, 14, 20, 0.98);
             border: 1px solid var(--ecam-border);
             border-top: 2px solid var(--ecam-cyan);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
         }
         
         .progress-header {
@@ -864,7 +869,7 @@
             <div class="ecam-status">
                 <div class="status-indicator">
                     <div class="status-light active"></div>
-                    <span>Status OK</span>
+                    <span>Status Normal</span>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 5px; align-items: flex-end;">
                     <div class="ecam-time" id="zuluTime">00:00:00Z</div>
