@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0a0e14">
-    <title>A350XWB AIDE MEMOIRE</title>
+    <title>ECAM Checklist System</title>
     <link rel="manifest" href="manifest.json">
+    <!-- iOS PWA support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="A350XWB">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -1666,20 +1670,20 @@
         // Register service worker for offline functionality
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then(registration => {
-                        console.log('Service Worker registered successfully:', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('Service Worker registration failed:', error);
-                    });
-                });
+                navigator.serviceWorker.register('./service-worker.js', { scope: './' })
+                     .then(registration => {
+                         console.log('Service Worker registered successfully:', registration.scope);
+                     })
+                     .catch(error => {
+                         console.log('Service Worker registration failed:', error);
+                     });
+                 });
         }
     </script>
 
     <!-- Fixed bottom contact bar -->
     <div style="position:fixed; left:0; bottom:0; width:100%; text-align:center; padding:8px 0; background:rgba(10,14,20,0.95); color:var(--ecam-gray); font-size:12px; border-top:1px solid var(--ecam-border); z-index:2000;">
-        For improvements send an email at : better@a350xwb.app
+        For improvements send an emali at : better@a350xwb.app
     </div>
 </body>
 </html>

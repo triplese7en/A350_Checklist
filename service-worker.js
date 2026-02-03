@@ -1,69 +1,53 @@
-const CACHE_NAME = 'ecam-checklist-v1';
-const urlsToCache = [
-  '/',
-  '/airbus-checklist.html',
-  'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Roboto+Mono:wght@400;500;700&display=swap'
+const CACHE_NAME = 'a350-checklist-v1';
+const PRECACHE_URLS = [
+  './',
+  './index.html',
+  './manifest.json',
+  './service-worker.js',
+  './icons/apple-touch-icon.png',
+  './icons/A350XWB-192.png',
+  './icons/A350XWB-512.png'
 ];
 
-// Install event - cache resources
+// Install - cache files
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Cache opened');
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(PRECACHE_URLS))
   );
   self.skipWaiting();
 });
 
-// Activate event - clean up old caches
+// Activate - cleanup old caches
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+    caches.keys().then(keys => Promise.all(
+      keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+    ))
   );
   self.clients.claim();
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch - serve from cache, network fallback. For navigation requests return cached index.html to avoid 404 offline.
 self.addEventListener('fetch', event => {
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request).catch(() =>
+        caches.match('./index.html')
+      )
+    );
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-
-        return fetch(event.request).then(response => {
-          // Check if valid response
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
-          }
-
-          // Clone the response
-          const responseToCache = response.clone();
-
-          caches.open(CACHE_NAME)
-            .then(cache => {
-              cache.put(event.request, responseToCache);
-            });
-
-          return response;
-        });
-      })
-      .catch(() => {
-        // If both cache and network fail, return offline page
-        return caches.match('/airbus-checklist.html');
-      })
+    caches.match(event.request).then(cached => {
+      if (cached) return cached;
+      return fetch(event.request).then(resp => {
+        // Optionally cache new requests (skip streaming and non-200)
+        if (!resp || resp.status !== 200 || resp.type === 'opaque') return resp;
+        const respClone = resp.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, respClone));
+        return resp;
+      }).catch(() => caches.match('./index.html'));
+    })
   );
 });
