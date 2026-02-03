@@ -584,10 +584,40 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             color: var(--ecam-cyan);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        
+        .phase-header:hover {
+            background: rgba(34, 211, 238, 0.2);
+            border-left-width: 6px;
+        }
+        
+        .phase-header .collapse-icon {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .phase-header.collapsed .collapse-icon {
+            transform: rotate(-90deg);
         }
         
         .checklist-group {
             margin-bottom: 30px;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            max-height: 5000px;
+            opacity: 1;
+        }
+        
+        .checklist-group.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin-bottom: 0;
         }
         
         .checklist-item {
@@ -700,15 +730,11 @@
         }
         
         .progress-container {
-            position: sticky;
-            bottom: 0;
-            margin-top: 30px;
-            padding: 20px;
+            margin-top: 20px;
+            padding: 15px;
             background: rgba(0, 0, 0, 0.95);
             border: 1px solid var(--ecam-border);
             border-top: 2px solid var(--ecam-cyan);
-            z-index: 100;
-            backdrop-filter: blur(10px);
         }
         
         .progress-header {
@@ -848,9 +874,13 @@
         </div>
         
         <div class="ecam-body">
-            <div class="phase-header">PRELIM COCKPIT PREPARATION</div>
+            <!-- PRELIM COCKPIT PREPARATION Section -->
+            <div class="phase-header" onclick="toggleSection('prelim')">
+                <span>PRELIM COCKPIT PREPARATION</span>
+                <span class="collapse-icon">▼</span>
+            </div>
             
-            <div class="checklist-group">
+            <div class="checklist-group" id="prelim-group">
                 <div class="checklist-item">
                     <div class="checkbox-container">
                         <input type="checkbox" id="check1">
@@ -1002,17 +1032,71 @@
                     <label for="check19" class="item-text">BEFORE START CHECKLIST</label>
                     <span class="item-status status-pending">PEND</span>
                 </div>
+                
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span>PRELIM Progress</span>
+                        <span id="prelimProgressText">0/19 Complete</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="prelimProgressBar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CRZ Section -->
+            <div class="phase-header" onclick="toggleSection('crz')">
+                <span>CRZ</span>
+                <span class="collapse-icon">▼</span>
+            </div>
+            
+            <div class="checklist-group" id="crz-group">
+                <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="crz1">
+                    </div>
+                    <label for="crz1" class="item-text">PLACEHOLDER ITEM</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span>CRZ Progress</span>
+                        <span id="crzProgressText">0/1 Complete</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="crzProgressBar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DESCENT PREPARATION Section -->
+            <div class="phase-header" onclick="toggleSection('descent')">
+                <span>DESCENT PREPARATION</span>
+                <span class="collapse-icon">▼</span>
+            </div>
+            
+            <div class="checklist-group" id="descent-group">
+                <div class="checklist-item">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="descent1">
+                    </div>
+                    <label for="descent1" class="item-text">PLACEHOLDER ITEM</label>
+                    <span class="item-status status-pending">PEND</span>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-header">
+                        <span>Descent Progress</span>
+                        <span id="descentProgressText">0/1 Complete</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="descentProgressBar" style="width: 0%"></div>
+                    </div>
+                </div>
             </div>
     
-            <div class="progress-container">
-                <div class="progress-header">
-                    <span>Checklist Progress</span>
-                    <span id="progressText">0/19 Complete</span>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
-                </div>
-            </div>
+            
         </div>
         
         <div class="ecam-footer">
@@ -1249,6 +1333,15 @@
             link.click();
         }
         
+        // Collapsible sections
+        function toggleSection(sectionId) {
+            const group = document.getElementById(sectionId + '-group');
+            const header = event.currentTarget;
+            
+            group.classList.toggle('collapsed');
+            header.classList.toggle('collapsed');
+        }
+        
         // Timer variables
         let referenceTime = null;
         let timerInterval = null;
@@ -1394,11 +1487,29 @@
         });
         
         function updateProgress() {
-            const checkedCount = document.querySelectorAll('input[type="checkbox"]:checked').length;
-            const percentage = (checkedCount / totalItems) * 100;
+            // Update PRELIM section
+            const prelimCheckboxes = document.querySelectorAll('#prelim-group input[type="checkbox"]');
+            const prelimChecked = document.querySelectorAll('#prelim-group input[type="checkbox"]:checked').length;
+            const prelimTotal = prelimCheckboxes.length;
+            const prelimPercentage = (prelimChecked / prelimTotal) * 100;
+            document.getElementById('prelimProgressBar').style.width = prelimPercentage + '%';
+            document.getElementById('prelimProgressText').textContent = `${prelimChecked}/${prelimTotal} Complete`;
             
-            document.getElementById('progressBar').style.width = percentage + '%';
-            document.getElementById('progressText').textContent = `${checkedCount}/${totalItems} Complete`;
+            // Update CRZ section
+            const crzCheckboxes = document.querySelectorAll('#crz-group input[type="checkbox"]');
+            const crzChecked = document.querySelectorAll('#crz-group input[type="checkbox"]:checked').length;
+            const crzTotal = crzCheckboxes.length;
+            const crzPercentage = (crzChecked / crzTotal) * 100;
+            document.getElementById('crzProgressBar').style.width = crzPercentage + '%';
+            document.getElementById('crzProgressText').textContent = `${crzChecked}/${crzTotal} Complete`;
+            
+            // Update DESCENT section
+            const descentCheckboxes = document.querySelectorAll('#descent-group input[type="checkbox"]');
+            const descentChecked = document.querySelectorAll('#descent-group input[type="checkbox"]:checked').length;
+            const descentTotal = descentCheckboxes.length;
+            const descentPercentage = (descentChecked / descentTotal) * 100;
+            document.getElementById('descentProgressBar').style.width = descentPercentage + '%';
+            document.getElementById('descentProgressText').textContent = `${descentChecked}/${descentTotal} Complete`;
         }
         
         function resetChecklist() {
