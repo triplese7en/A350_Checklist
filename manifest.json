@@ -5,10 +5,14 @@
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
   "background_color": "#0a0e14",
   "theme_color": "#0a0e14",
   "icons": [
+    {
+      "src": "icons/A350XWB-carbon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
     {
       "src": "icons/A350XWB-192.png",
       "sizes": "192x192",

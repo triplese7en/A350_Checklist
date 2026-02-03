@@ -6,7 +6,8 @@ const PRECACHE_URLS = [
   './service-worker.js',
   './icons/apple-touch-icon.png',
   './icons/A350XWB-192.png',
-  './icons/A350XWB-512.png'
+  './icons/A350XWB-512.png',
+  './icons/A350XWB-carbon.svg'
 ];
 
 // Install - cache files
@@ -27,13 +28,11 @@ self.addEventListener('activate', event => {
   self.clients.claim();
 });
 
-// Fetch - serve from cache, network fallback. For navigation requests return cached index.html to avoid 404 offline.
+// Fetch - navigation fallback to cached index.html; otherwise cache-first with network fallback
 self.addEventListener('fetch', event => {
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request).catch(() =>
-        caches.match('./index.html')
-      )
+      fetch(event.request).catch(() => caches.match('./index.html'))
     );
     return;
   }
@@ -42,7 +41,6 @@ self.addEventListener('fetch', event => {
     caches.match(event.request).then(cached => {
       if (cached) return cached;
       return fetch(event.request).then(resp => {
-        // Optionally cache new requests (skip streaming and non-200)
         if (!resp || resp.status !== 200 || resp.type === 'opaque') return resp;
         const respClone = resp.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(event.request, respClone));
