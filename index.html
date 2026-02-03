@@ -322,10 +322,13 @@
         
         /* Scratchpad styles */
         .scratchpad-btn {
-            background: transparent;
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: var(--ecam-panel);
             border: 2px solid var(--ecam-cyan);
             color: var(--ecam-cyan);
-            padding: 8px 16px;
+            padding: 12px 20px;
             font-family: 'Orbitron', sans-serif;
             font-size: 11px;
             font-weight: 700;
@@ -333,27 +336,34 @@
             letter-spacing: 2px;
             cursor: pointer;
             transition: all 0.3s ease;
+            z-index: 900;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
         
         .scratchpad-btn:hover {
             background: var(--ecam-cyan);
             color: var(--ecam-bg);
-            box-shadow: 0 0 15px rgba(34, 211, 238, 0.5);
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.6);
+            transform: translateY(-2px);
         }
         
         .scratchpad-panel {
             position: fixed;
+            bottom: 0;
             right: -450px;
-            top: 0;
             width: 450px;
-            height: 100vh;
+            height: 70vh;
+            max-height: 600px;
             background: var(--ecam-panel);
-            border-left: 3px solid var(--ecam-cyan);
-            box-shadow: -5px 0 40px rgba(0, 0, 0, 0.8);
-            z-index: 1500;
+            border: 3px solid var(--ecam-cyan);
+            border-bottom: none;
+            border-right: none;
+            box-shadow: -5px -5px 40px rgba(0, 0, 0, 0.8);
+            z-index: 1000;
             transition: right 0.4s ease;
             display: flex;
             flex-direction: column;
+            border-radius: 8px 0 0 0;
         }
         
         .scratchpad-panel.open {
@@ -548,6 +558,14 @@
             .scratchpad-panel {
                 width: 100%;
                 right: -100%;
+                height: 60vh;
+            }
+            
+            .scratchpad-btn {
+                bottom: 80px;
+                right: 10px;
+                padding: 10px 15px;
+                font-size: 10px;
             }
         }
         
@@ -817,11 +835,10 @@
     <div class="ecam-container">
         <div class="ecam-header">
             <div class="ecam-title">A350 AIDE MEMOIRE</div>
-            <button class="scratchpad-btn" onclick="toggleScratchpad()">Scratchpad</button>
             <div class="ecam-status">
                 <div class="status-indicator">
                     <div class="status-light active"></div>
-                    <span>System Normal</span>
+                    <span>Status OK</span>
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 5px; align-items: flex-end;">
                     <div class="ecam-time" id="zuluTime">00:00:00Z</div>
@@ -1069,6 +1086,9 @@
             </div>
         </div>
     </div>
+    
+    <!-- Floating Scratchpad Button -->
+    <button class="scratchpad-btn" onclick="toggleScratchpad()">📋 Scratchpad</button>
     
     <script>
         // Scratchpad functionality
