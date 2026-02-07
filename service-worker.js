@@ -5,7 +5,7 @@ const PRECACHE_URLS = [
   '/styles.css',
   '/app.js',
   '/manifest.json',
-  '/A350XWB-carbon.svg'
+  '/A350XWB-carbon.png'
 ];
 
 // Install - cache files
