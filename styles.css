@@ -1,0 +1,852 @@
+        :root {
+            --ecam-bg: #0a0e14;
+            --ecam-panel: #0f1419;
+            --ecam-amber: #ffb347;
+            --ecam-green: #4ade80;
+            --ecam-cyan: #22d3ee;
+            --ecam-white: #e5e7eb;
+            --ecam-gray: #6b7280;
+            --ecam-red: #ef4444;
+            --ecam-border: #1f2937;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background: var(--ecam-bg);
+            color: var(--ecam-white);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        
+        /* Scanline effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanline 8s linear infinite;
+        }
+        
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+        
+        /* Screen flicker */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.98; }
+        }
+        
+        .ecam-container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--ecam-panel);
+            border: 3px solid var(--ecam-border);
+            border-radius: 2px;
+            box-shadow: 
+                0 0 40px rgba(34, 211, 238, 0.2),
+                inset 0 0 60px rgba(0, 0, 0, 0.5);
+            animation: flicker 3s ease-in-out infinite;
+            margin: 20px auto;
+        }
+        
+        .ecam-header {
+            background: linear-gradient(180deg, #1a1f2e 0%, #0f1419 100%);
+            border-bottom: 2px solid var(--ecam-cyan);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .ecam-title {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--ecam-cyan);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(34, 211, 238, 0.6);
+        }
+        
+        .ecam-status {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .status-light {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .status-light.active {
+            background: var(--ecam-green);
+            box-shadow: 0 0 10px var(--ecam-green);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .ecam-time {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            color: var(--ecam-amber);
+            font-size: 14px;
+            font-weight: 700;
+        }
+        
+        .ecam-countdown {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            color: var(--ecam-cyan);
+            font-size: 12px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .ecam-countdown:hover {
+            color: var(--ecam-amber);
+            text-shadow: 0 0 10px rgba(255, 179, 71, 0.6);
+        }
+        
+        .ecam-countdown.negative {
+            color: var(--ecam-green);
+        }
+        
+        .ecam-countdown.positive {
+            color: var(--ecam-red);
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: var(--ecam-panel);
+            margin: 10% auto;
+            padding: 30px;
+            border: 3px solid var(--ecam-cyan);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 2px;
+            box-shadow: 0 0 40px rgba(34, 211, 238, 0.4);
+        }
+        
+        .modal-header {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--ecam-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .time-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .time-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--ecam-border);
+            color: var(--ecam-white);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 24px;
+            font-weight: 700;
+            width: 70px;
+            padding: 10px;
+            text-align: center;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .time-input:focus {
+            outline: none;
+            border-color: var(--ecam-cyan);
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+        }
+        
+        .time-separator {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            font-size: 24px;
+            color: var(--ecam-amber);
+            font-weight: 700;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .modal-btn {
+            background: transparent;
+            border: 2px solid var(--ecam-cyan);
+            color: var(--ecam-cyan);
+            padding: 10px 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 100px;
+        }
+        
+        .modal-btn:hover {
+            background: var(--ecam-cyan);
+            color: var(--ecam-bg);
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+        }
+        
+        .modal-btn.cancel {
+            border-color: var(--ecam-gray);
+            color: var(--ecam-gray);
+        }
+        
+        .modal-btn.cancel:hover {
+            background: var(--ecam-gray);
+            color: var(--ecam-bg);
+        }
+        
+        .modal-btn.reset {
+            border-color: var(--ecam-amber);
+            color: var(--ecam-amber);
+        }
+        
+        .modal-btn.reset:hover {
+            background: var(--ecam-amber);
+            color: var(--ecam-bg);
+        }
+        
+        .quick-set {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--ecam-border);
+        }
+        
+        .quick-set-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--ecam-gray);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .quick-set-buttons {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .quick-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--ecam-border);
+            color: var(--ecam-white);
+            padding: 5px 10px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-btn:hover {
+            border-color: var(--ecam-cyan);
+            background: rgba(34, 211, 238, 0.1);
+        }
+        
+        /* Scratchpad styles */
+        .scratchpad-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            background: var(--ecam-panel);
+            border: 2px solid var(--ecam-cyan);
+            color: var(--ecam-cyan);
+            padding: 12px 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 900;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .scratchpad-btn:hover {
+            background: var(--ecam-cyan);
+            color: var(--ecam-bg);
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        .scratchpad-panel {
+            position: fixed;
+            bottom: 0;
+            right: -450px;
+            width: 450px;
+            height: 70vh;
+            max-height: 600px;
+            background: var(--ecam-panel);
+            border: 3px solid var(--ecam-cyan);
+            border-bottom: none;
+            border-right: none;
+            box-shadow: -5px -5px 40px rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            transition: right 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            border-radius: 8px 0 0 0;
+        }
+        
+        .scratchpad-panel.open {
+            right: 0;
+        }
+        
+        .scratchpad-header {
+            background: linear-gradient(180deg, #1a1f2e 0%, #0f1419 100%);
+            padding: 20px;
+            border-bottom: 2px solid var(--ecam-cyan);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .scratchpad-title {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--ecam-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .close-scratchpad {
+            background: transparent;
+            border: 2px solid var(--ecam-amber);
+            color: var(--ecam-amber);
+            width: 35px;
+            height: 35px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .close-scratchpad:hover {
+            background: var(--ecam-amber);
+            color: var(--ecam-bg);
+            box-shadow: 0 0 15px rgba(255, 179, 71, 0.5);
+        }
+        
+        .scratchpad-tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--ecam-border);
+        }
+        
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--ecam-gray);
+            padding: 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--ecam-white);
+        }
+        
+        .tab-btn.active {
+            color: var(--ecam-cyan);
+            border-bottom-color: var(--ecam-cyan);
+            background: rgba(34, 211, 238, 0.1);
+        }
+        
+        .scratchpad-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .tab-pane {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+            padding: 20px;
+            overflow: auto;
+        }
+        
+        .tab-pane.active {
+            display: flex;
+        }
+        
+        .scratchpad-textarea {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--ecam-border);
+            color: var(--ecam-white);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            padding: 15px;
+            resize: none;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .scratchpad-textarea:focus {
+            border-color: var(--ecam-cyan);
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+        }
+        
+        .canvas-container {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--ecam-border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #drawingCanvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            touch-action: none;
+        }
+        
+        .canvas-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .canvas-btn {
+            background: transparent;
+            border: 2px solid var(--ecam-border);
+            color: var(--ecam-white);
+            padding: 8px 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 80px;
+        }
+        
+        .canvas-btn:hover {
+            border-color: var(--ecam-cyan);
+            background: rgba(34, 211, 238, 0.1);
+        }
+        
+        .canvas-btn.clear {
+            border-color: var(--ecam-red);
+            color: var(--ecam-red);
+        }
+        
+        .canvas-btn.clear:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        .color-picker {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .color-btn {
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--ecam-border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .color-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        .color-btn.active {
+            border-color: var(--ecam-cyan);
+            box-shadow: 0 0 10px var(--ecam-cyan);
+        }
+        
+        @media (max-width: 768px) {
+            .scratchpad-panel {
+                width: 100%;
+                right: -100%;
+                height: 60vh;
+            }
+            
+            .scratchpad-btn {
+                bottom: 80px;
+                right: 10px;
+                padding: 10px 15px;
+                font-size: 10px;
+            }
+        }
+        
+        .ecam-body {
+            padding: 30px;
+            overflow: visible;
+        }
+        
+        .phase-header {
+            background: rgba(34, 211, 238, 0.1);
+            border-left: 4px solid var(--ecam-cyan);
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--ecam-cyan);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        
+        .phase-header:hover {
+            background: rgba(34, 211, 238, 0.2);
+            border-left-width: 6px;
+        }
+        
+        .phase-header .collapse-icon {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .phase-header.collapsed .collapse-icon {
+            transform: rotate(-90deg);
+        }
+        
+        .checklist-group {
+            margin-bottom: 30px;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            max-height: 5000px;
+            opacity: 1;
+        }
+        
+        .checklist-group.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin-bottom: 0;
+            overflow: hidden;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--ecam-border);
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .checklist-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: rgba(74, 222, 128, 0.1);
+            transition: width 0.4s ease;
+        }
+        
+        .checklist-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--ecam-cyan);
+        }
+        
+        .checklist-item.completed::before {
+            width: 100%;
+        }
+        
+        .checklist-item.completed {
+            background: rgba(74, 222, 128, 0.05);
+            border-color: var(--ecam-green);
+        }
+        
+        .checkbox-container {
+            position: relative;
+            margin-right: 20px;
+        }
+        
+        input[type="checkbox"] {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--ecam-amber);
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="checkbox"]:hover {
+            border-color: var(--ecam-cyan);
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+        }
+        
+        input[type="checkbox"]:checked {
+            background: var(--ecam-green);
+            border-color: var(--ecam-green);
+            box-shadow: 0 0 15px rgba(74, 222, 128, 0.5);
+        }
+        
+        input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--ecam-bg);
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .item-text {
+            flex: 1;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            color: var(--ecam-white);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .checklist-item.completed .item-text {
+            color: var(--ecam-green);
+        }
+        
+        .item-status {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 2px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .status-pending {
+            color: var(--ecam-amber);
+            border: 1px solid var(--ecam-amber);
+        }
+        
+        .status-complete {
+            color: var(--ecam-green);
+            border: 1px solid var(--ecam-green);
+        }
+        
+        .progress-container {
+            position: sticky;
+            bottom: 0;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(10, 14, 20, 0.98);
+            border: 1px solid var(--ecam-border);
+            border-top: 2px solid var(--ecam-cyan);
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .progress-bar-container {
+            height: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--ecam-border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--ecam-green) 0%, var(--ecam-cyan) 100%);
+            transition: width 0.5s ease;
+            box-shadow: 0 0 20px rgba(74, 222, 128, 0.6);
+        }
+        
+        .ecam-footer {
+            padding: 20px 30px;
+            border-top: 2px solid var(--ecam-border);
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--ecam-gray);
+        }
+        
+        .reset-btn {
+            background: transparent;
+            border: 2px solid var(--ecam-amber);
+            color: var(--ecam-amber);
+            padding: 10px 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .reset-btn:hover {
+            background: var(--ecam-amber);
+            color: var(--ecam-bg);
+            box-shadow: 0 0 20px rgba(255, 179, 71, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .ecam-container {
+                margin: 10px auto;
+            }
+            
+            .ecam-header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+            
+            .ecam-title {
+                font-size: 20px;
+            }
+            
+            .ecam-body {
+                padding: 20px 15px;
+            }
+            
+            .phase-header {
+                font-size: 14px;
+                padding: 12px 15px;
+            }
+            
+            .checklist-item {
+                padding: 12px 15px;
+                flex-wrap: wrap;
+            }
+            
+            .item-text {
+                font-size: 13px;
+                word-break: break-word;
+            }
+            
+            .ecam-footer {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .ecam-container {
+                max-width: 800px;
+            }
+            
+            .ecam-title {
+                font-size: 24px;
+            }
+        }
+        
+        @media (min-width: 1025px) {
+            body {
+                align-items: center;
+            }
+        }
