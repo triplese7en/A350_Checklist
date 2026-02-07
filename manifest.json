@@ -10,15 +10,15 @@
   "theme_color": "#22d3ee",
   "icons": [
     {
-      "src": "A350XWB-carbon.svg",
+      "src": "A350XWB-carbon.png",
       "sizes": "any",
-      "type": "image/svg+xml",
+      "type": "image/png+xml",
       "purpose": "any"
     },
     {
-      "src": "A350XWB-carbon.svg",
+      "src": "A350XWB-carbon.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png+xml",
       "purpose": "maskable"
     }
   ]
