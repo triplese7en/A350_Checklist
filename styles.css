@@ -655,8 +655,8 @@
         
         input[type="checkbox"] {
             appearance: none;
-            width: 44px;
-            height: 44px;
+            width: 24px;
+            height: 24px;
             border: 2px solid var(--ecam-amber);
             background: transparent;
             cursor: pointer;

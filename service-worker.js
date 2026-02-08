@@ -1,4 +1,4 @@
-const CACHE_NAME = 'a350-checklist-v3';
+const CACHE_NAME = 'a350-checklist-v4';
 const PRECACHE_URLS = [
   '/',
   '/index.html',
