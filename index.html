@@ -31,6 +31,111 @@
             </div>
         </div>
         
+        <!-- Aircraft Schematic -->
+        <div class="aircraft-schematic">
+            <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" class="aircraft-svg">
+                <!-- Fuselage -->
+                <path d="M 150 100 L 650 100 Q 680 100 680 115 Q 680 130 650 130 L 150 130 Q 120 130 120 115 Q 120 100 150 100 Z" 
+                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                
+                <!-- Nose -->
+                <path d="M 120 115 L 80 115" 
+                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                
+                <!-- Cockpit windows -->
+                <circle cx="100" cy="105" r="3" fill="var(--ecam-cyan)"/>
+                <circle cx="100" cy="115" r="3" fill="var(--ecam-cyan)"/>
+                <circle cx="100" cy="125" r="3" fill="var(--ecam-cyan)"/>
+                
+                <!-- Main wings -->
+                <path d="M 300 115 L 250 60 L 280 60 L 330 115" 
+                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                <path d="M 300 115 L 250 170 L 280 170 L 330 115" 
+                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                
+                <!-- Winglets -->
+                <path d="M 250 60 L 245 45" 
+                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                <path d="M 250 170 L 245 185" 
+                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                
+                <!-- Engines on wings -->
+                <ellipse cx="280" cy="75" rx="12" ry="18" 
+                         stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                <circle cx="280" cy="75" r="6" 
+                        stroke="var(--ecam-cyan)" stroke-width="1" fill="none"/>
+                
+                <ellipse cx="280" cy="155" rx="12" ry="18" 
+                         stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                <circle cx="280" cy="155" r="6" 
+                        stroke="var(--ecam-cyan)" stroke-width="1" fill="none"/>
+                
+                <!-- Horizontal stabilizer -->
+                <path d="M 630 115 L 610 95 L 630 95 L 650 115" 
+                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                <path d="M 630 115 L 610 135 L 630 135 L 650 115" 
+                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                
+                <!-- Vertical stabilizer -->
+                <path d="M 650 115 L 650 70 L 665 75 L 665 115" 
+                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                
+                <!-- Passenger windows along fuselage -->
+                <g class="windows">
+                    <circle cx="160" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="180" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="200" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="220" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="240" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="260" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    
+                    <circle cx="350" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="370" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="390" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="410" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="430" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="450" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="470" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="490" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="510" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="530" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="550" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="570" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="590" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    
+                    <circle cx="160" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="180" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="200" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="220" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="240" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="260" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    
+                    <circle cx="350" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="370" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="390" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="410" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="430" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="450" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="470" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="490" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="510" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="530" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="550" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="570" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="590" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                </g>
+                
+                <!-- Aircraft label -->
+                <text x="400" y="175" text-anchor="middle" 
+                      fill="var(--ecam-cyan)" 
+                      font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" 
+                      font-size="16" 
+                      font-weight="700" 
+                      letter-spacing="3"
+                      opacity="0.8">A350 XWB</text>
+            </svg>
+        </div>
+        
         <div class="ecam-body">
             <!-- PRELIM COCKPIT PREPARATION Section -->
             <div class="phase-header" onclick="toggleSection('prelim')">
@@ -386,7 +491,7 @@
         </div>
         
         <div class="ecam-footer">
-            <span>A350-900 XWB | REV 2026.02.1 | For improvements/suggestions : better@a350xwb.app</span>
+            <span>A350-900 XWB | REV 2026.02.1 | For improvements/suggestions : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7517100101100735144640450d02175b140505">[email&#160;protected]</a></span>
             <button class="reset-btn" onclick="resetChecklist()">Reset All</button>
         </div>
     </div>
@@ -460,7 +565,7 @@
     <!-- Floating Scratchpad Button -->
     <button class="scratchpad-btn" onclick="toggleScratchpad()">📋 Scratchpad</button>
     
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Scratchpad functionality
         let canvas, ctx, isDrawing = false;
         let currentColor = '#e5e7eb';
@@ -739,14 +844,4 @@
         
         // Close modal when clicking outside
         window.onclick = function(event) {
-            const modal = document.getElementById('timerModal');
-            if (event.target == modal) {
-                closeTimerModal();
-            }
-        }
-    </script>
-    
-    
-    <script src="app.js"></script>
-</body>
-</html>
+           

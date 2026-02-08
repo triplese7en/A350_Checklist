@@ -84,6 +84,57 @@
             gap: 15px;
         }
         
+        .aircraft-schematic {
+            background: linear-gradient(180deg, #0f1419 0%, #0a0e14 100%);
+            border-bottom: 2px solid var(--ecam-border);
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .aircraft-schematic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(34, 211, 238, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .aircraft-svg {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.3));
+            position: relative;
+            z-index: 1;
+        }
+        
+        .aircraft-svg path,
+        .aircraft-svg circle,
+        .aircraft-svg ellipse {
+            transition: all 0.3s ease;
+        }
+        
+        .aircraft-svg:hover {
+            filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.5));
+        }
+        
+        .aircraft-svg .windows circle {
+            animation: windowBlink 3s ease-in-out infinite;
+        }
+        
+        @keyframes windowBlink {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 0.3; }
+        }
+        
+        
         .ecam-title {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
             font-size: 28px;
@@ -807,6 +858,14 @@
             
             .ecam-title {
                 font-size: 20px;
+            }
+            
+            .aircraft-schematic {
+                padding: 20px 10px;
+            }
+            
+            .aircraft-svg {
+                max-width: 100%;
             }
             
             .ecam-body {
