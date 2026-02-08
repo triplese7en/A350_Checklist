@@ -460,7 +460,7 @@
     <!-- Floating Scratchpad Button -->
     <button class="scratchpad-btn" onclick="toggleScratchpad()">📋 Scratchpad</button>
     
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Scratchpad functionality
         let canvas, ctx, isDrawing = false;
         let currentColor = '#e5e7eb';
@@ -488,9 +488,9 @@
             canvas.addEventListener('mouseout', stopDrawing);
             
             // Touch support for iPad/Apple Pencil
-            canvas.addEventListener('touchstart', handleTouch);
-            canvas.addEventListener('touchmove', handleTouch);
-            canvas.addEventListener('touchend', stopDrawing);
+            canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+            canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+            canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
             
             // Load saved data
             loadNotes();
@@ -574,14 +574,41 @@
             }
         }
         
-        function handleTouch(e) {
+        function handleTouchStart(e) {
             e.preventDefault();
             const touch = e.touches[0];
-            const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 'mousemove', {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            canvas.dispatchEvent(mouseEvent);
+            const rect = canvas.getBoundingClientRect();
+            isDrawing = true;
+            lastX = touch.clientX - rect.left;
+            lastY = touch.clientY - rect.top;
+        }
+        
+        function handleTouchMove(e) {
+            e.preventDefault();
+            if (!isDrawing) return;
+            
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            
+            lastX = x;
+            lastY = y;
+        }
+        
+        function handleTouchEnd(e) {
+            e.preventDefault();
+            stopDrawing();
         }
         
         function setDrawColor(color, element) {
@@ -739,14 +766,4 @@
         
         // Close modal when clicking outside
         window.onclick = function(event) {
-            const modal = document.getElementById('timerModal');
-            if (event.target == modal) {
-                closeTimerModal();
-            }
-        }
-    </script>
-    
-    
-    <script src="app.js"></script>
-</body>
-</html>           
+            const moda
