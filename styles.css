@@ -108,7 +108,7 @@
         
         .aircraft-svg {
             width: 100%;
-            max-width: 800px;
+            max-width: 1000px;
             height: auto;
             filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.3));
             position: relative;

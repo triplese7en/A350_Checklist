@@ -33,106 +33,185 @@
         
         <!-- Aircraft Schematic -->
         <div class="aircraft-schematic">
-            <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" class="aircraft-svg">
-                <!-- Fuselage -->
-                <path d="M 150 100 L 650 100 Q 680 100 680 115 Q 680 130 650 130 L 150 130 Q 120 130 120 115 Q 120 100 150 100 Z" 
-                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+            <svg viewBox="0 0 1000 250" xmlns="http://www.w3.org/2000/svg" class="aircraft-svg">
+                <!-- Fuselage - wider body characteristic of A350 -->
+                <ellipse cx="400" cy="125" rx="280" ry="18" 
+                         stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
                 
-                <!-- Nose -->
-                <path d="M 120 115 L 80 115" 
-                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                <!-- Nose cone - distinctive A350 nose shape -->
+                <path d="M 120 125 Q 100 125 90 125 Q 85 125 85 125" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <path d="M 120 107 Q 100 107 85 125" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
+                <path d="M 120 143 Q 100 143 85 125" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
                 
-                <!-- Cockpit windows -->
-                <circle cx="100" cy="105" r="3" fill="var(--ecam-cyan)"/>
-                <circle cx="100" cy="115" r="3" fill="var(--ecam-cyan)"/>
-                <circle cx="100" cy="125" r="3" fill="var(--ecam-cyan)"/>
+                <!-- Cockpit windows - distinctive pattern -->
+                <circle cx="105" cy="115" r="2.5" fill="var(--ecam-cyan)"/>
+                <circle cx="112" cy="118" r="2.5" fill="var(--ecam-cyan)"/>
+                <circle cx="105" cy="125" r="2.5" fill="var(--ecam-cyan)"/>
+                <circle cx="112" cy="132" r="2.5" fill="var(--ecam-cyan)"/>
+                <circle cx="105" cy="135" r="2.5" fill="var(--ecam-cyan)"/>
                 
-                <!-- Main wings -->
-                <path d="M 300 115 L 250 60 L 280 60 L 330 115" 
-                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
-                <path d="M 300 115 L 250 170 L 280 170 L 330 115" 
-                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                <!-- Forward door -->
+                <rect x="145" y="117" width="8" height="16" rx="1" 
+                      stroke="var(--ecam-cyan)" stroke-width="1.5" fill="none"/>
                 
-                <!-- Winglets -->
-                <path d="M 250 60 L 245 45" 
-                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
-                <path d="M 250 170 L 245 185" 
-                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                <!-- Main wings - swept back design characteristic of A350 -->
+                <path d="M 320 125 L 240 55 L 260 52 L 355 120" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
+                <path d="M 320 125 L 240 195 L 260 198 L 355 130" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
                 
-                <!-- Engines on wings -->
-                <ellipse cx="280" cy="75" rx="12" ry="18" 
-                         stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
-                <circle cx="280" cy="75" r="6" 
+                <!-- Wing trailing edge -->
+                <path d="M 355 120 L 380 125" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
+                <path d="M 355 130 L 380 125" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
+                
+                <!-- Distinctive curved winglets (sharklets) -->
+                <path d="M 240 55 Q 232 48 230 35" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <path d="M 240 55 L 235 40" 
+                      stroke="var(--ecam-cyan)" stroke-width="1.5" fill="none"/>
+                
+                <path d="M 240 195 Q 232 202 230 215" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <path d="M 240 195 L 235 210" 
+                      stroke="var(--ecam-cyan)" stroke-width="1.5" fill="none"/>
+                
+                <!-- Rolls-Royce Trent XWB engines - larger, distinctive -->
+                <ellipse cx="285" cy="70" rx="16" ry="25" 
+                         stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
+                <ellipse cx="285" cy="70" rx="10" ry="16" 
+                         stroke="var(--ecam-cyan)" stroke-width="1.5" fill="none"/>
+                <circle cx="285" cy="70" r="5" 
                         stroke="var(--ecam-cyan)" stroke-width="1" fill="none"/>
+                <!-- Engine pylon -->
+                <path d="M 295 80 L 310 110" 
+                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
                 
-                <ellipse cx="280" cy="155" rx="12" ry="18" 
-                         stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
-                <circle cx="280" cy="155" r="6" 
+                <ellipse cx="285" cy="180" rx="16" ry="25" 
+                         stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
+                <ellipse cx="285" cy="180" rx="10" ry="16" 
+                         stroke="var(--ecam-cyan)" stroke-width="1.5" fill="none"/>
+                <circle cx="285" cy="180" r="5" 
                         stroke="var(--ecam-cyan)" stroke-width="1" fill="none"/>
-                
-                <!-- Horizontal stabilizer -->
-                <path d="M 630 115 L 610 95 L 630 95 L 650 115" 
-                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
-                <path d="M 630 115 L 610 135 L 630 135 L 650 115" 
+                <!-- Engine pylon -->
+                <path d="M 295 170 L 310 140" 
                       stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
                 
-                <!-- Vertical stabilizer -->
-                <path d="M 650 115 L 650 70 L 665 75 L 665 115" 
-                      stroke="var(--ecam-cyan)" stroke-width="2" fill="none"/>
+                <!-- Rear fuselage taper -->
+                <path d="M 680 125 Q 710 125 725 125" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
+                <path d="M 680 107 Q 710 110 725 125" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
+                <path d="M 680 143 Q 710 140 725 125" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
                 
-                <!-- Passenger windows along fuselage -->
+                <!-- Horizontal stabilizer - T-tail style -->
+                <path d="M 705 125 L 675 100 L 695 98 L 720 123" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
+                <path d="M 705 125 L 675 150 L 695 152 L 720 127" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
+                
+                <!-- Vertical stabilizer - distinctive tall fin -->
+                <path d="M 720 125 L 720 65 L 735 68 L 735 125" 
+                      stroke="var(--ecam-cyan)" stroke-width="2.5" fill="none"/>
+                <path d="M 720 70 L 735 72" 
+                      stroke="var(--ecam-cyan)" stroke-width="1.5" fill="none"/>
+                
+                <!-- APU exhaust -->
+                <circle cx="728" cy="125" r="3" 
+                        stroke="var(--ecam-cyan)" stroke-width="1.5" fill="none"/>
+                
+                <!-- Passenger windows - two rows characteristic of wide body -->
                 <g class="windows">
-                    <circle cx="160" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="180" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="200" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="220" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="240" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="260" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <!-- Upper row -->
+                    <circle cx="170" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="185" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="200" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="215" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="230" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="245" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="260" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="275" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="290" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
                     
-                    <circle cx="350" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="370" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="390" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="410" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="430" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="450" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="470" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="490" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="510" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="530" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="550" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="570" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="590" cy="110" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="390" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="405" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="420" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="435" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="450" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="465" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="480" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="495" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="510" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="525" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="540" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="555" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="570" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="585" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="600" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="615" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="630" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="645" cy="115" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
                     
-                    <circle cx="160" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="180" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="200" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="220" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="240" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="260" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <!-- Lower row -->
+                    <circle cx="170" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="185" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="200" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="215" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="230" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="245" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="260" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="275" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="290" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
                     
-                    <circle cx="350" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="370" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="390" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="410" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="430" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="450" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="470" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="490" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="510" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="530" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="550" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="570" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
-                    <circle cx="590" cy="120" r="2" fill="var(--ecam-cyan)" opacity="0.6"/>
+                    <circle cx="390" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="405" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="420" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="435" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="450" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="465" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="480" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="495" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="510" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="525" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="540" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="555" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="570" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="585" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="600" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="615" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="630" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
+                    <circle cx="645" cy="135" r="2" fill="var(--ecam-cyan)" opacity="0.7"/>
                 </g>
                 
+                <!-- Wing-body fairing lines -->
+                <path d="M 320 120 Q 340 118 360 118" 
+                      stroke="var(--ecam-cyan)" stroke-width="1" fill="none" opacity="0.5"/>
+                <path d="M 320 130 Q 340 132 360 132" 
+                      stroke="var(--ecam-cyan)" stroke-width="1" fill="none" opacity="0.5"/>
+                
+                <!-- Emergency exit doors -->
+                <rect x="305" y="108" width="6" height="12" rx="1" 
+                      stroke="var(--ecam-amber)" stroke-width="1" fill="none" opacity="0.8"/>
+                <rect x="305" cy="130" width="6" height="12" rx="1" 
+                      stroke="var(--ecam-amber)" stroke-width="1" fill="none" opacity="0.8"/>
+                <rect x="550" y="108" width="6" height="12" rx="1" 
+                      stroke="var(--ecam-amber)" stroke-width="1" fill="none" opacity="0.8"/>
+                <rect x="550" y="130" width="6" height="12" rx="1" 
+                      stroke="var(--ecam-amber)" stroke-width="1" fill="none" opacity="0.8"/>
+                
                 <!-- Aircraft label -->
-                <text x="400" y="175" text-anchor="middle" 
+                <text x="500" y="220" text-anchor="middle" 
                       fill="var(--ecam-cyan)" 
                       font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" 
-                      font-size="16" 
-                      font-weight="700" 
-                      letter-spacing="3"
-                      opacity="0.8">A350 XWB</text>
+                      font-size="18" 
+                      font-weight="900" 
+                      letter-spacing="4"
+                      opacity="0.9">A350-900 XWB</text>
             </svg>
         </div>
         
@@ -732,6 +811,24 @@
             group.classList.toggle('collapsed');
             header.classList.toggle('collapsed');
         }
+        
+        // Initialize all sections as collapsed on page load
+        function initCollapsedSections() {
+            const allGroups = document.querySelectorAll('.checklist-group');
+            const allHeaders = document.querySelectorAll('.phase-header');
+            
+            allGroups.forEach(group => {
+                group.classList.add('collapsed');
+            });
+            
+            allHeaders.forEach(header => {
+                header.classList.add('collapsed');
+            });
+        }
+        
+        // Run on page load
+        document.addEventListener('DOMContentLoaded', initCollapsedSections);
+        
         
         // Timer variables
         let referenceTime = null;
