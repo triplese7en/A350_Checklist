@@ -1,4 +1,4 @@
-        // Checklist functionality
+// Checklist functionality
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         const totalItems = checkboxes.length;
         
@@ -63,3 +63,20 @@
             
             updateProgress();
         }
+        
+        // Collapse all sections on initial load
+        function initializeCollapsedSections() {
+            const allGroups = document.querySelectorAll('.checklist-group');
+            const allHeaders = document.querySelectorAll('.phase-header');
+            
+            allGroups.forEach(group => {
+                group.classList.add('collapsed');
+            });
+            
+            allHeaders.forEach(header => {
+                header.classList.add('collapsed');
+            });
+        }
+        
+        // Initialize collapsed sections on page load
+        window.addEventListener('DOMContentLoaded', initializeCollapsedSections);
