@@ -386,7 +386,7 @@
         </div>
         
         <div class="ecam-footer">
-            <span>A350-900 XWB | REV 2026.02.1 | For improvements/suggestions : better@a350xwb.app</span>
+            <span>A350-900 XWB | REV 2026.02.1 | For improvements/suggestions : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5b393e2f2f3e291b3a686e6b232c39753a2b2b">[email&#160;protected]</a></span>
             <button class="reset-btn" onclick="resetChecklist()">Reset All</button>
         </div>
     </div>
@@ -459,6 +459,46 @@
     
     <!-- Floating Scratchpad Button -->
     <button class="scratchpad-btn" onclick="toggleScratchpad()">📋 Scratchpad</button>
+    
+    <!-- Analytics Modal (Hidden - Access with Ctrl+Shift+A) -->
+    <div id="analyticsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📊 Usage Statistics</h2>
+                <button class="modal-close" onclick="toggleAnalytics()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="statUniqueUsers">-</div>
+                        <div class="stat-label">Unique Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statTotalVisits">-</div>
+                        <div class="stat-label">Total Visits</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statAvgVisits">-</div>
+                        <div class="stat-label">Avg Visits/User</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statActiveUsers">-</div>
+                        <div class="stat-label">Active Users (30d)</div>
+                    </div>
+                </div>
+                <div class="stats-details">
+                    <p><strong>First Visit:</strong> <span id="statFirstVisit">-</span></p>
+                    <p><strong>Last Visit:</strong> <span id="statLastVisit">-</span></p>
+                </div>
+                <div class="stats-note">
+                    💡 <em>Privacy-friendly tracking: Only anonymous usage counts, no personal data collected.</em>
+                </div>
+                <div class="stats-note" style="margin-top: 10px; background: rgba(34, 211, 238, 0.1); border-color: var(--ecam-cyan);">
+                    🔐 <em>Admin access: Press <strong>Ctrl+Shift+A</strong> to toggle this panel</em>
+                </div>
+            </div>
+        </div>
+    </div>
     
     
     <!-- External JavaScript -->
