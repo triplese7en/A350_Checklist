@@ -13,11 +13,21 @@ function initAnalytics() {
     let userId = localStorage.getItem(USER_ID_KEY);
     if (!userId) {
         userId = generateUUID();
-        localStorage.setItem(USER_ID_KEY, userId);
+        try {
+            localStorage.setItem(USER_ID_KEY, userId);
+        } catch (e) {
+            console.error('Failed to save user ID:', e);
+        }
     }
     
     // Get or create analytics data
-    let analytics = JSON.parse(localStorage.getItem(ANALYTICS_KEY) || '{"users": {}, "totalVisits": 0}');
+    let analytics;
+    try {
+        analytics = JSON.parse(localStorage.getItem(ANALYTICS_KEY) || '{"users": {}, "totalVisits": 0}');
+    } catch (e) {
+        console.error('Failed to parse analytics data:', e);
+        analytics = { users: {}, totalVisits: 0 };
+    }
     
     // Track this user
     const now = new Date().toISOString();
@@ -35,7 +45,11 @@ function initAnalytics() {
     analytics.totalVisits += 1;
     
     // Save analytics
-    localStorage.setItem(ANALYTICS_KEY, JSON.stringify(analytics));
+    try {
+        localStorage.setItem(ANALYTICS_KEY, JSON.stringify(analytics));
+    } catch (e) {
+        console.error('Failed to save analytics:', e);
+    }
     
     // Log stats to console (for you to check)
     console.log('📊 A350 Analytics:');
@@ -56,7 +70,13 @@ function generateUUID() {
 // Get analytics stats (call this from console to see stats)
 function getAnalyticsStats() {
     const ANALYTICS_KEY = 'a350_analytics';
-    const analytics = JSON.parse(localStorage.getItem(ANALYTICS_KEY) || '{"users": {}, "totalVisits": 0}');
+    let analytics;
+    try {
+        analytics = JSON.parse(localStorage.getItem(ANALYTICS_KEY) || '{"users": {}, "totalVisits": 0}');
+    } catch (e) {
+        console.error('Failed to parse analytics data:', e);
+        analytics = { users: {}, totalVisits: 0 };
+    }
     
     const users = Object.values(analytics.users);
     const uniqueUsers = users.length;
@@ -157,10 +177,12 @@ function toggleScratchpad() {
     }
 }
 
-function switchTab(tab) {
+function switchTab(tab, event) {
     // Update tab buttons
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
     
     // Update tab panes
     document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
@@ -190,7 +212,16 @@ function loadNotes() {
 
 function saveNotes() {
     const notes = document.getElementById('scratchpadNotes').value;
-    localStorage.setItem('scratchpadNotes', notes);
+    try {
+        localStorage.setItem('scratchpadNotes', notes);
+    } catch (e) {
+        console.error('Failed to save notes - storage quota exceeded:', e);
+        // Only show alert once to avoid spam on every keystroke
+        if (!window.notesStorageAlertShown) {
+            alert('Could not save notes - storage space full');
+            window.notesStorageAlertShown = true;
+        }
+    }
 }
 
 // Auto-save notes on input
@@ -298,7 +329,12 @@ function clearCanvas() {
 
 function saveDrawingToStorage() {
     const dataURL = canvas.toDataURL();
-    localStorage.setItem('scratchpadDrawing', dataURL);
+    try {
+        localStorage.setItem('scratchpadDrawing', dataURL);
+    } catch (e) {
+        console.error('Failed to save drawing - storage quota exceeded:', e);
+        alert('Could not save drawing - image too large for storage');
+    }
 }
 
 function loadDrawing() {
@@ -321,12 +357,14 @@ function saveDrawing() {
 }
 
 // Collapsible sections
-function toggleSection(sectionId) {
+function toggleSection(sectionId, event) {
     const group = document.getElementById(sectionId + '-group');
-    const header = event.currentTarget;
+    const header = event ? event.currentTarget : null;
     
     group.classList.toggle('collapsed');
-    header.classList.toggle('collapsed');
+    if (header) {
+        header.classList.toggle('collapsed');
+    }
 }
 
 // Timer variables
@@ -439,12 +477,16 @@ function setQuickTime(minutesFromNow) {
 }
 
 // Close modal when clicking outside
-window.onclick = function(event) {
+function handleModalClick(event) {
     const modal = document.getElementById('timerModal');
     if (event.target === modal) {
         closeTimerModal();
     }
 }
+
+// Remove if exists, then add (prevents duplicate listeners on hot-reload)
+window.removeEventListener('click', handleModalClick);
+window.addEventListener('click', handleModalClick);
 
 // Checklist functionality
 const checkboxes = document.querySelectorAll('input[type="checkbox"]');

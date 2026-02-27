@@ -33,7 +33,7 @@
         
         <div class="ecam-body">
             <!-- PRELIM COCKPIT PREPARATION Section -->
-            <div class="phase-header" onclick="toggleSection('prelim')">
+            <div class="phase-header" onclick="toggleSection('prelim', event)">
                 <span>PRELIM COCKPIT PREPARATION</span>
                 <span class="collapse-icon">▼</span>
             </div>
@@ -203,7 +203,7 @@
             </div>
             
             <!-- CRZ Section -->
-            <div class="phase-header" onclick="toggleSection('crz')">
+            <div class="phase-header" onclick="toggleSection('crz', event)">
                 <span>CRZ</span>
                 <span class="collapse-icon">▼</span>
             </div>
@@ -293,7 +293,7 @@
             </div>
             
             <!-- DESCENT PREPARATION Section -->
-            <div class="phase-header" onclick="toggleSection('descent')">
+            <div class="phase-header" onclick="toggleSection('descent', event)">
                 <span>DESCENT PREPARATION</span>
                 <span class="collapse-icon">▼</span>
             </div>
@@ -429,8 +429,8 @@
         </div>
         
         <div class="scratchpad-tabs">
-            <button class="tab-btn active" onclick="switchTab('notes')">Notes</button>
-            <button class="tab-btn" onclick="switchTab('draw')">Draw</button>
+            <button class="tab-btn active" onclick="switchTab('notes', event)">Notes</button>
+            <button class="tab-btn" onclick="switchTab('draw', event)">Draw</button>
         </div>
         
         <div class="scratchpad-content">
