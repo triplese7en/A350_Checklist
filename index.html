@@ -460,48 +460,19 @@
     <!-- Floating Scratchpad Button -->
     <button class="scratchpad-btn" onclick="toggleScratchpad()">📋 Scratchpad</button>
     
-    <!-- Analytics Modal (Hidden - Access with Ctrl+Shift+A) -->
-    <div id="analyticsModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>📊 Usage Statistics</h2>
-                <button class="modal-close" onclick="toggleAnalytics()">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value" id="statUniqueUsers">-</div>
-                        <div class="stat-label">Unique Users</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="statTotalVisits">-</div>
-                        <div class="stat-label">Total Visits</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="statAvgVisits">-</div>
-                        <div class="stat-label">Avg Visits/User</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="statActiveUsers">-</div>
-                        <div class="stat-label">Active Users (30d)</div>
-                    </div>
-                </div>
-                <div class="stats-details">
-                    <p><strong>First Visit:</strong> <span id="statFirstVisit">-</span></p>
-                    <p><strong>Last Visit:</strong> <span id="statLastVisit">-</span></p>
-                </div>
-                <div class="stats-note">
-                    💡 <em>Privacy-friendly tracking: Only anonymous usage counts, no personal data collected.</em>
-                </div>
-                <div class="stats-note" style="margin-top: 10px; background: rgba(34, 211, 238, 0.1); border-color: var(--ecam-cyan);">
-                    🔐 <em>Admin access: Press <strong>Ctrl+Shift+A</strong> to toggle this panel</em>
-                </div>
-            </div>
-        </div>
-    </div>
-    
     
     <!-- External JavaScript -->
     <script src="app.js"></script>
+    
+    <!-- Cloudflare Web Analytics -->
+    <!-- 
+        SETUP INSTRUCTIONS:
+        1. Go to https://dash.cloudflare.com/sign-up (sign up for free)
+        2. Add your website to Cloudflare (or skip if already using Cloudflare)
+        3. Go to Analytics & Logs > Web Analytics
+        4. Click "Add a site" and enter your GitHub Pages URL
+        5. Copy the token and replace "YOUR_CLOUDFLARE_TOKEN" below
+    -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_CLOUDFLARE_TOKEN"}'></script>
 </body>
 </html>
