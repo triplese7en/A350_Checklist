@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self';">
     <meta name="theme-color" content="#22d3ee">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="A350 XWB">
     <title>A350 AIDE MEMOIRE</title>
-    <link rel="icon" type="image/svg+xml" href="A350XWB-carbon.png">
-    <link rel="apple-touch-icon" href="A350XWB-carbon.png">
+    <link rel="icon" type="image/webp" href="A350XWB-carbon.webp">
+    <link rel="icon" type="image/png" href="A350XWB-carbon-optimized.png">
+    <link rel="apple-touch-icon" href="A350XWB-carbon-optimized.png">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -386,7 +388,7 @@
         </div>
         
         <div class="ecam-footer">
-            <span>A350-900 XWB | REV 2026.02.1 | For improvements/suggestions : better@a350xwb.app</a></span>
+            <span>A350-900 XWB | REV 2026.02.1 | For improvements/suggestions : better@a350xwb.app</span>
             <button class="reset-btn" onclick="resetChecklist()">Reset All</button>
         </div>
     </div>

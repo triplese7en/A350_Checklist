@@ -10,15 +10,21 @@
   "theme_color": "#22d3ee",
   "icons": [
     {
-      "src": "A350XWB-carbon.png",
-      "sizes": "any",
-      "type": "image/png+xml",
+      "src": "A350XWB-carbon.webp",
+      "sizes": "640x640",
+      "type": "image/webp",
       "purpose": "any"
     },
     {
-      "src": "A350XWB-carbon.png",
+      "src": "A350XWB-carbon-optimized.png",
+      "sizes": "640x640",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "A350XWB-carbon-optimized.png",
       "sizes": "512x512",
-      "type": "image/png+xml",
+      "type": "image/png",
       "purpose": "maskable"
     }
   ]

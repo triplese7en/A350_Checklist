@@ -1,11 +1,12 @@
-const CACHE_NAME = 'a350-checklist-v6';
+const CACHE_NAME = 'a350-checklist-v7';
 const PRECACHE_URLS = [
   '/',
   '/index.html',
   '/styles.css',
   '/app.js',
   '/manifest.json',
-  '/A350XWB-carbon.png'
+  '/A350XWB-carbon.webp',
+  '/A350XWB-carbon-optimized.png'
 ];
 
 // Install - cache files
