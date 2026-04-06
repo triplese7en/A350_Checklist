@@ -239,9 +239,18 @@ function toggleSection(sectionId, event) {
     const group = document.getElementById(sectionId + '-group');
     const header = event ? event.currentTarget : null;
     
-    group.classList.toggle('collapsed');
-    if (header) {
-        header.classList.toggle('collapsed');
+    if (group && header) {
+        const isCollapsed = group.classList.contains('collapsed');
+        
+        if (isCollapsed) {
+            // Expand section
+            group.classList.remove('collapsed');
+            header.classList.remove('collapsed');
+        } else {
+            // Collapse section
+            group.classList.add('collapsed');
+            header.classList.add('collapsed');
+        }
     }
 }
 
@@ -461,3 +470,4 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
+
