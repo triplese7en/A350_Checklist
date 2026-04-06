@@ -239,6 +239,11 @@ function toggleSection(sectionId, event) {
     const group = document.getElementById(sectionId + '-group');
     const header = event ? event.currentTarget : null;
     
+    // Prevent event bubbling
+    if (event) {
+        event.stopPropagation();
+    }
+    
     if (group && header) {
         const isCollapsed = group.classList.contains('collapsed');
         
