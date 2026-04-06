@@ -485,3 +485,37 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+// Setup event listeners for phase headers (replaces inline onclick)
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, setting up event listeners...');
+    
+    // Setup phase header click handlers
+    const phaseHeaders = document.querySelectorAll('.phase-header');
+    phaseHeaders.forEach(header => {
+        // Remove inline onclick attribute
+        header.removeAttribute('onclick');
+        
+        // Add event listener
+        header.addEventListener('click', function(e) {
+            const onclickAttr = this.getAttribute('onclick') || 
+                this.getAttribute('data-section-id');
+            
+            // Extract section ID from onclick or data attribute
+            let sectionId = null;
+            if (onclickAttr && onclickAttr.includes("toggleSection")) {
+                const match = onclickAttr.match(/toggleSection\('(\w+)'/);
+                if (match) {
+                    sectionId = match[1];
+                }
+            }
+            
+            console.log('Phase header clicked:', sectionId, e);
+            if (sectionId) {
+                toggleSection(sectionId, e);
+            }
+        });
+    });
+    
+    console.log('Phase headers set up:', phaseHeaders.length);
+});
+
