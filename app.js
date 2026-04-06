@@ -237,17 +237,7 @@ function saveDrawing() {
 // Collapsible sections
 function toggleSection(sectionId, event) {
     const group = document.getElementById(sectionId + '-group');
-    
-    // Find the header element (either from event.currentTarget or querySelector)
-    const header = event && event.currentTarget ? event.currentTarget : document.querySelector(`[onclick*="toggleSection('${sectionId}'"]`);
-    
-    console.log('toggleSection called:', sectionId, 'group:', group, 'header:', header, 'isCollapsed:', group ? group.classList.contains('collapsed') : 'N/A');
-    
-    // Prevent default and stop propagation
-    if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
+    const header = event ? event.currentTarget : null;
     
     if (group && header) {
         const isCollapsed = group.classList.contains('collapsed');
@@ -256,15 +246,11 @@ function toggleSection(sectionId, event) {
             // Expand section
             group.classList.remove('collapsed');
             header.classList.remove('collapsed');
-            console.log('Expanded:', sectionId);
         } else {
             // Collapse section
             group.classList.add('collapsed');
             header.classList.add('collapsed');
-            console.log('Collapsed:', sectionId);
         }
-    } else {
-        console.error('toggleSection failed: group or header not found', { sectionId, group, header });
     }
 }
 
@@ -484,38 +470,4 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
-
-// Setup event listeners for phase headers (replaces inline onclick)
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, setting up event listeners...');
-    
-    // Setup phase header click handlers
-    const phaseHeaders = document.querySelectorAll('.phase-header');
-    phaseHeaders.forEach(header => {
-        // Remove inline onclick attribute
-        header.removeAttribute('onclick');
-        
-        // Add event listener
-        header.addEventListener('click', function(e) {
-            const onclickAttr = this.getAttribute('onclick') || 
-                this.getAttribute('data-section-id');
-            
-            // Extract section ID from onclick or data attribute
-            let sectionId = null;
-            if (onclickAttr && onclickAttr.includes("toggleSection")) {
-                const match = onclickAttr.match(/toggleSection\('(\w+)'/);
-                if (match) {
-                    sectionId = match[1];
-                }
-            }
-            
-            console.log('Phase header clicked:', sectionId, e);
-            if (sectionId) {
-                toggleSection(sectionId, e);
-            }
-        });
-    });
-    
-    console.log('Phase headers set up:', phaseHeaders.length);
-});
 
