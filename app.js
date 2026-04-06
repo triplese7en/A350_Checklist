@@ -237,10 +237,15 @@ function saveDrawing() {
 // Collapsible sections
 function toggleSection(sectionId, event) {
     const group = document.getElementById(sectionId + '-group');
-    const header = event ? event.currentTarget : null;
     
-    // Prevent event bubbling
+    // Find the header element (either from event.currentTarget or querySelector)
+    const header = event && event.currentTarget ? event.currentTarget : document.querySelector(`[onclick*="toggleSection('${sectionId}'"]`);
+    
+    console.log('toggleSection called:', sectionId, 'group:', group, 'header:', header, 'isCollapsed:', group ? group.classList.contains('collapsed') : 'N/A');
+    
+    // Prevent default and stop propagation
     if (event) {
+        event.preventDefault();
         event.stopPropagation();
     }
     
@@ -251,11 +256,15 @@ function toggleSection(sectionId, event) {
             // Expand section
             group.classList.remove('collapsed');
             header.classList.remove('collapsed');
+            console.log('Expanded:', sectionId);
         } else {
             // Collapse section
             group.classList.add('collapsed');
             header.classList.add('collapsed');
+            console.log('Collapsed:', sectionId);
         }
+    } else {
+        console.error('toggleSection failed: group or header not found', { sectionId, group, header });
     }
 }
 
